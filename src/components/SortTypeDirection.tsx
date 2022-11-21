@@ -1,47 +1,32 @@
-import React, { useRef } from "react"
+import React, {useRef} from "react"
 
 interface SortDirectionProps {
-    sortType: string
-    sortDirection: string
-    iconSrc: string
-    defaultCheck: boolean
-    parentRef: HTMLSelectElement | null
-    onSortHandler: (
-        sortType: string | undefined,
-        sortDirection: string | undefined
-    ) => void
+   sortType: string
+   sortDirection: string
+   iconSrc: string
+   defaultCheck: boolean
+   parentRef: string
+   onSortHandler: (sortType: string, sortDirection: string) => void
 }
 
-const SortDirection = ({
-    sortType,
-    sortDirection,
-    iconSrc,
-    defaultCheck,
-    parentRef,
-    onSortHandler,
-}: SortDirectionProps) => {
-    const inputRef = useRef<HTMLInputElement | null>(null)
-    return (
-        <>
-            <label htmlFor={sortDirection}>
-                <img src={iconSrc} alt={`${sortType} ${sortDirection}`} />
-            </label>
-            <input
-                id={sortDirection}
-                value={sortDirection}
-                type="radio"
-                defaultChecked={defaultCheck}
-                ref={inputRef}
-                onChange={() =>
-                    onSortHandler(
-                        // parentRef.current.value,
-                        "1",
-                        inputRef.current?.value
-                    )
-                }
-            />
-        </>
-    )
+const SortTypeDirection = ({
+                              sortType, sortDirection, iconSrc, defaultCheck, parentRef, onSortHandler,
+                           }: SortDirectionProps) => {
+   const inputRef = useRef<HTMLInputElement | null>(null)
+   return (<>
+      <label htmlFor={sortDirection}>
+         <img src={iconSrc} alt={`${sortType} ${sortDirection}`}/>
+      </label>
+      <input
+         id={sortDirection}
+         value={sortDirection}
+         type="radio"
+         defaultChecked={defaultCheck}
+         ref={inputRef}
+         name={"group1"}
+         onChange={() => onSortHandler(parentRef, inputRef.current!.value)}
+      />
+   </>)
 }
 
-export default SortDirection
+export default SortTypeDirection

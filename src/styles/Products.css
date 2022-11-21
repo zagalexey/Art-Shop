@@ -1,0 +1,49 @@
+.container {
+  width: fit-content;
+  height: 90%;
+  padding-left: 15px;
+  padding-right: 15px;
+  border-radius: 0.5rem;
+  background-color: white;
+}
+.container .pages {
+  width: 30px;
+  height: 30px;
+  margin: 10px;
+  padding: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #AAAAAA;
+  border-radius: 0.5em;
+}
+.container .pages:hover {
+  background: rgb(131, 191, 243);
+  color: white;
+}
+.container .prev, .container .next {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+  padding: 5px;
+  background: #EAEAEA;
+  color: #AAAAAA;
+  border-radius: 0.5em;
+}
+.container .prev {
+  margin-right: 30px;
+}
+.container .next {
+  margin-left: 30px;
+}
+.container .active {
+  background: #3399FF;
+  color: white;
+}
+.container .disabled {
+  visibility: hidden;
+}
+
+/*# sourceMappingURL=Products.css.map */

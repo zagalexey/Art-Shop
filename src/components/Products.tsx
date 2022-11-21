@@ -1,74 +1,66 @@
-import React, { useEffect, useState } from "react"
-import { data } from "../data/dummyData"
+import React, {useEffect, useState} from "react"
+import ReactPaginate from "react-paginate"
+
 import ProductItem from "./ProductItem"
-import { ProductItemType } from "../interfaces"
-import ReactPaginate, { ReactPaginateProps } from "react-paginate"
+
+import {ProductItemType} from "../interfaces"
 
 import "../styles/Products.css"
 
 interface ProductsProps {
-    displayedData: ProductItemType[]
-    onAddToCart: (id: number) => void
+   displayedData: ProductItemType[]
+   onAddToCart: (id: number) => void
 }
 
-const Products = ({ onAddToCart, displayedData }: ProductsProps) => {
-    const [products, setProducts] = useState<ProductItemType[] | null>(null)
+const Products = ({onAddToCart, displayedData}: ProductsProps) => {
+   const [products, setProducts] = useState<ProductItemType[] | null>(null)
 
-    const productPerPage: number = 6
-    let numberOfPages: number = Math.ceil(displayedData.length / productPerPage)
+   const productPerPage: number = 6
+   let numberOfPages: number = Math.ceil(displayedData.length / productPerPage)
 
-    const onNextPage = (page: any) => {
-        let productsToShow: ProductItemType[] = []
-        let min: number = page.selected * productPerPage
-        let max: number = min + productPerPage
-        productsToShow = displayedData.slice(min, max)
-        console.log("Data: ", displayedData)
-        console.log("Sliced data: ", productsToShow)
-        setProducts(productsToShow)
-    }
+   const onNextPage = (page: any) => {
+      let productsToShow: ProductItemType[] = []
+      let min: number = page.selected * productPerPage
+      let max: number = min + productPerPage
+      productsToShow = displayedData.slice(min, max)
+      setProducts(productsToShow)
+   }
 
-    useEffect(() => {
-        onNextPage({ selected: 0 })
-    }, [displayedData])
+   useEffect(() => {
+      onNextPage({selected: 0})
+   }, [displayedData])
 
-    return (
-        <div className={"w-4/5 h-fit flex justify-center bg-green-500"}>
-            <div className={"w-[90%]"}>
-                <section className={"m-3 flex flex-row justify-between"}>
-                    <div className={"flex items-center gap-5"}>
-                        <h1 className={"text-2xl font-bold"}>Our Products</h1>
-                        <p className={"text-[grey]"}>
-                            {data.products.length} items
-                        </p>
-                    </div>
-                    <p>Sorting</p>
-                </section>
-                <div className={"flex flex-wrap justify-between gap-4"}>
-                    {products &&
-                        products.map((item) => (
-                            <ProductItem
-                                key={item.id}
-                                productItem={item}
-                                onAddToCart={onAddToCart}
-                            />
-                        ))}
-                </div>
-                <section className={"w-full h-[3rem] bg-amber-400"}>
-                    <ReactPaginate
-                        className={"flex justify-center items-center pages"}
-                        breakLabel="..."
-                        nextLabel="Next"
-                        onPageChange={(page) => onNextPage(page)}
-                        pageRangeDisplayed={5}
-                        pageCount={numberOfPages}
-                        previousLabel="Previous"
-                        activeLinkClassName={"active_link"}
-                        nextLinkClassName={"next"}
-                    />
-                </section>
-            </div>
-        </div>
-    )
+   return (<div className={"flex flex-col items-center"}>
+      <div
+         className={"inline-grid gap-4 grid-cols-3 grid-rows-2 md:grid-cols-1 md:grid-rows-6 lg:grid-cols-2 lg:grid-rows-3 xl:grid-rows-2 xl:grid-cols-3"}
+      >
+         {products?.length ? (products.map((item) => (<ProductItem
+            key={item.id}
+            productItem={item}
+            onAddToCart={onAddToCart}
+         />))) : (<div className={"w-full flex justify-center my-4"}>
+            <h3>No Products!</h3>
+         </div>)}
+      </div>
+      {products?.length ? (<section
+         className={"w-full h-[3rem] flex justify-center items-center mt-5"}
+      >
+         <ReactPaginate
+            className={"flex items-center justify-center container bg-red-500 border"}
+            breakLabel="..."
+            nextLabel=">"
+            previousLabel="<"
+            previousClassName={"prev"}
+            onPageChange={(page) => onNextPage(page)}
+            pageRangeDisplayed={5}
+            pageCount={numberOfPages}
+            activeClassName={"active"}
+            nextClassName={"next"}
+            pageClassName={"pages"}
+            disabledClassName={"disabled"}
+         />
+      </section>) : (<></>)}
+   </div>)
 }
 
 export default Products
